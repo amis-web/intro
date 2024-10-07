@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-buttons a {
+    color: black;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease;
+}
+
+#home-button {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.nav-buttons a#home-button:hover,
+.nav-buttons a:hover {
+    background-color: #dcdcdc;
+    border-radius: 5px;
+}
+
+
+/* タイトルセクション */
+.title-section {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-color: #f5f5f5;
+}
+
+.title-content {
+    position: relative;
+}
+
+.title-section h1 {
+    font-size: 2.5em;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+.title-section h2 {
+    font-size: 1.5em;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+
+.about-us {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.about-us h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.card-set {
+    display: flex;
+    justify-content: center;
+    padding: 20px; /* セクション全体にパディングを追加 */
+}
+
+.card {
+    width: calc(33.33% - 20px); /* 画面幅を3等分し、カード間にスペースを考慮 */
+    margin: 10px; /* カード間にマージンを追加 */
+}
+
+.section-name h2{
+    margin-top: 30px;
+    margin-left: 40px;
+}
+
+.section-name h5{
+    margin-left: 60px;
+}
