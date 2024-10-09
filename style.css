@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: #fff;
+
     box-sizing: border-box;
 }
 
@@ -96,12 +96,26 @@ header {
 .card-set {
     display: flex;
     justify-content: center;
-    padding: 20px; /* セクション全体にパディングを追加 */
+    padding: 20px 50px; /* セクション全体にパディングを追加 */
 }
 
 .card {
+    position: relative;
+    border-radius: 15px;
     width: calc(33.33% - 20px); /* 画面幅を3等分し、カード間にスペースを考慮 */
     margin: 10px; /* カード間にマージンを追加 */
+}
+
+.card .btn {
+    position: absolute;
+    bottom: 20px; 
+    left: 65%;
+    color: black;
+    background-color: #dcdcdc;
+}
+
+.card-text {
+    padding-bottom: 25%;
 }
 
 .section-name h2{
@@ -111,4 +125,198 @@ header {
 
 .section-name h5{
     margin-left: 60px;
+}
+
+
+.news-list{
+    list-style: none outside;
+    margin: 0;
+    padding: 10px 60px;
+  }
+
+.news-list .item a{
+    display: flex;
+    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #CCC;
+    padding: 20px 20px;
+}
+  
+.news-list .item:first-child a{
+    border-top: 1px solid #CCC;
+}
+
+.news-list .item .date{
+    margin: 0;
+    text-align: center;
+    min-width: 140px;
+    font-size: 16px;
+    color: #999;
+    padding: 0 20px 0 0;
+}
+
+.news-list .item .category-normal{
+    margin: 0;
+    min-width: 140px;
+    padding: 0 20px 0 0;
+}
+
+.news-list .item .category-red{
+    margin: 0;
+    min-width: 140px;
+    padding: 0 20px 0 0;
+}
+
+.news-list .item .category-red span{
+    background: red;
+    color: #FFF;
+    text-align: center;
+    display: inline-block;
+    padding: 5px 34px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.news-list .item .category-normal span{
+    background: #999;
+    color: #FFF;
+    text-align: center;
+    display: inline-block;
+    padding: 5px 25px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.news-list .item .title{
+    margin: 0;
+    width: 100%;
+}
+
+.news-list .item a:hover .title{
+    color: #00F;
+}
+  
+  @media screen and (max-width: 767px){
+  .news-list .item a{
+    flex-wrap: wrap;
+  }
+  .news-list .item .date{
+    min-width: 100px;
+  }
+  .news-list .item .title{
+    margin-top: 10px;
+  }
+  }
+
+section {
+    padding: 20px 0px;
+}
+
+.event-section {
+    padding-top: 5px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.event {
+    display: flex;
+    overflow: hidden; 
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 80%;
+    height: 250px;
+    margin-right: auto;
+    border: 2px solid #ccc;      /* 枠線の色と太さ */
+    border-radius: 15px;         /* 角丸の半径 */ 
+}
+
+.event img {
+    width:35%;
+    height: 100%;
+    padding: 15px;
+    border-radius: 25px;
+    object-fit: cover; 
+}
+
+.event-content {
+    margin: 25px 25px 5px 25px;
+    width: 100%;
+    position: relative;
+}
+
+.event-content h2 {
+
+}
+
+.event-content p {
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.event .btn {
+    position: absolute;
+    bottom: 15px; 
+    right: 20px;
+    color: black;
+    background-color: #dcdcdc;
+    font-size: 25px;
+}
+/* フッター全体 */
+.footer {
+    font-family: Arial, sans-serif;
+}
+
+/* フッター本体 */
+.footer-main {
+    align-items: center;
+    padding: 20px;
+    background-color: #EEEEEE; /* フッター本体の背景色 */
+}
+
+.footer-top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-logo img {
+    width: 100px; /* ロゴのサイズ調整 */
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* SNSアイコンエリア */
+.footer-sns {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.footer-sns a {
+    margin: 0 10px;
+}
+
+.footer-sns img {
+    width: 24px; /* SNSアイコンのサイズ */
+    height: 24px;
+}
+
+/* 著作権表示エリア */
+.footer-copyright {
+    padding: 10px;
+    background-color: #777; /* 著作権エリアの背景色 */
+    color: #fff;
+    text-align: center;
 }
