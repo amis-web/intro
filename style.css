@@ -7,6 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
+    width: 100%;
 }
 
 header {
@@ -89,7 +90,6 @@ header {
 }
 
 .about-us h1 {
-    font-size: 2.5em;
     margin-bottom: 20px;
 }
 
@@ -109,7 +109,7 @@ header {
 .card .btn {
     position: absolute;
     bottom: 20px; 
-    left: 65%;
+    left: 75%;
     color: black;
     background-color: #dcdcdc;
 }
@@ -119,6 +119,7 @@ header {
 }
 
 .section-name h2{
+    font-size: 35px;
     margin-top: 30px;
     margin-left: 40px;
 }
@@ -194,6 +195,11 @@ header {
     width: 100%;
 }
 
+.date {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .news-list .item a:hover .title{
     color: #00F;
 }
@@ -216,8 +222,12 @@ section {
 
 .event-section {
     padding-top: 5px;
-    margin-left: 40px;
     margin-bottom: 20px;
+}
+
+.event-section h3 {
+    margin-top: 25px;
+    margin-left: 65px;
 }
 
 .event {
@@ -229,28 +239,24 @@ section {
     margin-top: 20px;
     margin-right: 20px;
     width: 80%;
-    height: 250px;
+    height: 180px;
     margin-right: auto;
     border: 2px solid #ccc;      /* 枠線の色と太さ */
     border-radius: 15px;         /* 角丸の半径 */ 
 }
 
 .event img {
-    width:35%;
-    height: 100%;
+    flex-basis: 30%;
+    height: auto;
     padding: 15px;
     border-radius: 25px;
     object-fit: cover; 
 }
 
 .event-content {
-    margin: 25px 25px 5px 25px;
+    margin: 10px 0px 5px 25px;
     width: 100%;
     position: relative;
-}
-
-.event-content h2 {
-
 }
 
 .event-content p {
@@ -264,8 +270,55 @@ section {
     right: 20px;
     color: black;
     background-color: #dcdcdc;
-    font-size: 25px;
+    font-size: 20px;
 }
+
+.more-link {
+    display: flex;
+    margin: 0px auto;
+    width: 80%;
+}
+.more-link .btn {
+    margin-left: auto;
+    margin-top: 15px;
+    color: black;
+    background-color: #dcdcdc;
+    font-size: 20px;
+}
+
+.sns-link {
+    margin-left: 40px;
+    margin-top: 5px;
+}
+
+.sns-link h3,
+.sns-link .sns-list {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.sns-link h5 {
+    margin-left: 40px;
+}
+
+.divider {
+    margin: 30px 100px;
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-container iframe {
+    width: 100%;
+    max-width: 900px; /* 最大幅を設定 */
+    height: 315px;
+    border-radius: 15px; /* 任意で角を丸く */
+}
+
+
 /* フッター全体 */
 .footer {
     font-family: Arial, sans-serif;
@@ -319,4 +372,152 @@ section {
     background-color: #777; /* 著作権エリアの背景色 */
     color: #fff;
     text-align: center;
+}
+
+.overlay-image {
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    height: 300px;
+    border-radius: 10px; /* 角を丸くする */
+}
+  
+.overlay-image:hover {
+    opacity: 0.6;
+}
+  
+.text-overlay {
+    color: black;
+    text-align: center;
+  }
+
+.slide-card {
+    width: 90%;
+}
+
+.show-more {
+    display: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+@media (max-width: 600px) {
+    .section-name h2 {
+        font-size: 23px;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .section-name h5 {
+        margin-left: 40px;
+        font-size: 16px;
+    }
+
+    .event-section {
+        margin-bottom: 0;
+    }
+
+    .event-list {
+        padding: 10px 20px;
+    }
+
+    .event-content {
+        margin: 5px;
+    }
+
+    .event-content h3 {
+        margin: 0px 0px !important;
+    }
+
+    .event {
+        width: 100%;
+    }
+
+    .event img {
+        display: none;
+    }
+
+    .card {
+        width: 300px !important;
+        height: 450px !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .card-img-top {
+        height: 70% !important;
+        width: auto;
+        object-fit: cover;
+    }
+
+    .card-body .btn {
+        display: none !important;
+    }
+
+    .card-text {
+        padding: 0;
+    }
+
+    .card-set {
+        padding: 10px 20px;
+    }
+
+    .slide-card .btn {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .show-more {
+        display: flex !important;
+    }
+
+    .carousel-inner {
+        display: flex !important;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .carousel-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .custom-right,
+    .custom-left {
+        display: none !important;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .sns-link {
+        margin-left: 5px;
+    }
+
+    .sns-link h3,
+    .event-section h3 {
+        margin-left: 25px;
+        font-size: 18px;
+    }
+
+    .sns-link h5 {
+        font-size: 16px;
+    }
+
+    .divider {
+        margin: 30px 50px;
+    }
+
+    .footer-links {
+        font-size: 11px;
+        flex-wrap: nowrap;
+    }
+    
 }
