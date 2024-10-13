@@ -222,12 +222,17 @@ section {
 
 .event-section {
     padding-top: 5px;
+    margin-left: 40px;
     margin-bottom: 20px;
 }
 
 .event-section h3 {
-    margin-top: 25px;
-    margin-left: 65px;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.event-section h3:nth-of-type(2) {
+    margin-left: 25px;
 }
 
 .event {
@@ -241,20 +246,20 @@ section {
     width: 80%;
     height: 180px;
     margin-right: auto;
-    border: 2px solid #ccc;      /* 枠線の色と太さ */
+    border: 1.5px solid #ccc;      /* 枠線の色と太さ */
     border-radius: 15px;         /* 角丸の半径 */ 
 }
 
 .event img {
     flex-basis: 30%;
     height: auto;
-    padding: 15px;
+    padding: 10px;
     border-radius: 25px;
     object-fit: cover; 
 }
 
 .event-content {
-    margin: 10px 0px 5px 25px;
+    margin: 10px 0px 5px 20px;
     width: 100%;
     position: relative;
 }
@@ -262,6 +267,15 @@ section {
 .event-content p {
     font-size: 18px;
     margin-left: 20px;
+    margin-bottom: 0px;
+}
+
+.base-info {
+    display: flex;
+}
+
+.base-info h3 {
+    margin-left: 10px;
 }
 
 .event .btn {
@@ -271,6 +285,10 @@ section {
     color: black;
     background-color: #dcdcdc;
     font-size: 20px;
+}
+
+.event .btn:hover {
+    background-color: #dcdcdc;
 }
 
 .more-link {
@@ -287,9 +305,13 @@ section {
 }
 
 .katsudo-btn {
-    float: right;
-    margin-left: auto;
-    margin-right: 20px;
+    position: absolute !important;
+    bottom: 15px !important;
+    right: 15px !important;
+    color: black !important;
+    background-color: #dcdcdc;
+    font-size: 20px !important;
+    left: auto !important;
 }
 
 
@@ -407,9 +429,23 @@ section {
     cursor: pointer;
 }
 
+.footer-sns {
+    display: none;
+}
+
 
 @media (max-width: 600px) {
-    header {
+    .logo {
+        display: none;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: small;
+    }
+    .nav-buttons #home-button {
         display: none;
     }
     .news-list {
@@ -462,6 +498,7 @@ section {
 
     .event-section {
         margin-bottom: 0;
+        margin-left: 0px;
         padding: 10px 20px;
     }
 
@@ -470,13 +507,12 @@ section {
     }
 
     .event-list {
-        padding: 10px 0px 10px 20px;
+        padding: 10px 0px 10px 10px;
     }
 
     .event {
         margin-top: 0px;
         margin-bottom: 10px;
-        border: none;
     }
 
     .event .btn {
@@ -500,21 +536,35 @@ section {
 
     .event {
         width: 100%;
+        height: auto;
     }
 
     .event img {
+        width: 50%;
+    }
+
+    .base-info {
+        display: block;
+    }
+
+    .base-info .place {
+        font-size: small;
+    }
+
+    .explain {
         display: none;
     }
 
     .card {
         width: 300px !important;
-        height: 450px !important;
+        height: 350px !important;
         display: flex;
         justify-content: center;
+        overflow: hidden;
     }
 
     .card-img-top {
-        height: 70% !important;
+        height: 224.25px !important;
         width: auto;
         object-fit: cover;
     }
@@ -560,6 +610,10 @@ section {
     .custom-right,
     .custom-left {
         display: none !important;
+    }
+
+    .show-more {
+        margin-top: 5px !important;
     }
 
     .hidden {
