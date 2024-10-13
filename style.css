@@ -286,6 +286,13 @@ section {
     font-size: 20px;
 }
 
+.katsudo-btn {
+    float: right;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+
 .sns-link {
     margin-left: 40px;
     margin-top: 5px;
@@ -402,6 +409,46 @@ section {
 
 
 @media (max-width: 600px) {
+    header {
+        display: none;
+    }
+    .news-list {
+        padding: 10px 20px;
+    }
+
+    .item a {
+        padding: 10px 10px !important;
+    }
+
+    .row {
+        display: block !important;
+    }
+
+    .col-md-4 {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+    
+    .overlay-link {
+        display: block;
+        margin: 0 auto; /* カードを中央揃え */
+    }
+
+    .text-overlay {
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .text-overlay p {
+        margin-bottom: 0px;
+    }
+
+    .text-overlay p:nth-of-type(1) {
+        margin-bottom: 1rem; /* 必要に応じて調整 */
+    }
+
     .section-name h2 {
         font-size: 23px;
         margin-top: 10px;
@@ -415,10 +462,25 @@ section {
 
     .event-section {
         margin-bottom: 0;
+        padding: 10px 20px;
+    }
+
+    .event-section h3 {
+        margin-top: 10px !important;
     }
 
     .event-list {
-        padding: 10px 20px;
+        padding: 10px 0px 10px 20px;
+    }
+
+    .event {
+        margin-top: 0px;
+        margin-bottom: 10px;
+        border: none;
+    }
+
+    .event .btn {
+        font-size: initial !important;
     }
 
     .event-content {
@@ -427,6 +489,13 @@ section {
 
     .event-content h3 {
         margin: 0px 0px !important;
+        font-size: initial;
+        font: bolder !important;
+    }
+
+    .event-content p {
+        font-size: initial !important;
+        margin: 0px;
     }
 
     .event {
