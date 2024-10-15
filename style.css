@@ -605,7 +605,7 @@ section {
     .event-content {
         width: 50%;
         display: flex;
-        margin: 10px 5px 5px 15px;
+        margin: 10px 5px 5px 10px;
     }
 
     .event-content h3 {
