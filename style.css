@@ -291,6 +291,7 @@ section {
     border-radius: 15px;
     object-fit: cover; 
     object-position: center top;
+    overflow: hidden;
 }
 
 .event-content {
