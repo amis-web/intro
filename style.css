@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+p {
+    font-size: larger;
+}
+
 body {
     font-family: Arial, sans-serif;
     width: 100%;
@@ -106,16 +110,40 @@ header {
     margin: 10px; /* カード間にマージンを追加 */
 }
 
+.card-img-top {
+    height: 50%;
+    object-fit: cover;
+    object-position: center top;
+}
+
 .card .btn {
     position: absolute;
     bottom: 20px; 
     left: 75%;
     color: black;
-    background-color: #dcdcdc;
+    background-color: #f5f5f5 !important;
+}
+
+.card-body {
+    height: 250px;
+}
+
+.card-3 {
+    height: 500px;
+}
+
+.card-body a:hover {
+    background-color: #dcdcdc !important;
 }
 
 .card-text {
-    padding-bottom: 25%;
+    margin-bottom: auto !important;
+    font-size: larger !important
+}
+
+.up-date {
+    padding-left: 10px;
+    margin-bottom: 0.5px !important;
 }
 
 .section-name h2{
@@ -140,11 +168,16 @@ header {
     flex-wrap: wrap;
     flex-wrap: nowrap;
     text-decoration: none;
-    color: #333;
+    color: #333 !important;
     border-bottom: 1px solid #CCC;
     padding: 20px 20px;
 }
-  
+
+.news-list .item a .title:hover {
+    color: #333;
+    text-decoration: none;
+}
+
 .news-list .item:first-child a{
     border-top: 1px solid #CCC;
 }
@@ -244,18 +277,20 @@ section {
     margin-top: 20px;
     margin-right: 20px;
     width: 80%;
-    height: 180px;
+    height: 230px;
     margin-right: auto;
     border: 1.5px solid #ccc;      /* 枠線の色と太さ */
     border-radius: 15px;         /* 角丸の半径 */ 
 }
 
 .event img {
-    flex-basis: 30%;
+    position: relative;
     height: auto;
+    width: 30%;
     padding: 10px;
-    border-radius: 25px;
+    border-radius: 15px;
     object-fit: cover; 
+    object-position: center top;
 }
 
 .event-content {
@@ -274,6 +309,13 @@ section {
     display: flex;
 }
 
+.base-info .event-name {
+    margin-left: 10px !important;
+}
+.base-info .place {
+    margin-left: 10px !important;
+}
+
 .base-info h3 {
     margin-left: 10px;
 }
@@ -283,12 +325,12 @@ section {
     bottom: 15px; 
     right: 20px;
     color: black;
-    background-color: #dcdcdc;
+    background-color: #f5f5f5 !important;
     font-size: 20px;
 }
 
 .event .btn:hover {
-    background-color: #dcdcdc;
+    background-color: #dcdcdc !important;
 }
 
 .more-link {
@@ -296,12 +338,22 @@ section {
     margin: 0px auto;
     width: 80%;
 }
+
 .more-link .btn {
     margin-left: auto;
     margin-top: 15px;
     color: black;
-    background-color: #dcdcdc;
+    background-color: #f5f5f5;
     font-size: 20px;
+}
+
+.more-link {
+    display: flex;
+    justify-content: right !important;
+}
+
+.more-link p {
+    font-size: 1.5em;
 }
 
 .katsudo-btn {
@@ -310,7 +362,6 @@ section {
     right: 15px !important;
     color: black !important;
     background-color: #dcdcdc;
-    font-size: 20px !important;
     left: auto !important;
 }
 
@@ -318,6 +369,7 @@ section {
 .sns-link {
     margin-left: 40px;
     margin-top: 5px;
+    font-size: larger;
 }
 
 .sns-link h3,
@@ -342,7 +394,7 @@ section {
 
 .form-container iframe {
     width: 100%;
-    max-width: 900px; /* 最大幅を設定 */
+    max-width: 1500px; /* 最大幅を設定 */
     height: 315px;
     border-radius: 15px; /* 任意で角を丸く */
 }
@@ -435,6 +487,10 @@ section {
 
 
 @media (max-width: 600px) {
+    p {
+        font-size: initial !important;
+    }
+
     .logo {
         display: none;
     }
@@ -445,11 +501,33 @@ section {
         margin-right: auto;
         font-size: small;
     }
+
+    .nav-buttons a {
+        padding: 5px 5px !important;
+    }
+
     .nav-buttons #home-button {
         display: none;
     }
+
     .news-list {
         padding: 10px 20px;
+    }
+
+    .title-section {
+        height: 300px;
+    }
+
+    .title-section h1 {
+        font-size: 2.0em !important;
+    }
+
+    .title-section h2 {
+        font-size: 1.3em !important;
+    }
+
+    .title-content {
+        padding: 0px 10px;
     }
 
     .item a {
@@ -496,6 +574,10 @@ section {
         font-size: 16px;
     }
 
+    .event-content {
+        align-items: center;
+    }
+
     .event-section {
         margin-bottom: 0;
         margin-left: 0px;
@@ -520,7 +602,8 @@ section {
     }
 
     .event-content {
-        margin: 5px;
+        display: flex;
+        margin: 10px 5px 5px 15px;
     }
 
     .event-content h3 {
@@ -536,48 +619,72 @@ section {
 
     .event {
         width: 100%;
-        height: auto;
+        height: 130px;
+    }
+
+    .event .btn {
+        right: 5px;
+        bottom: 1px !important;
     }
 
     .event img {
-        width: 50%;
+        width: 100%;
+        padding: 5px;
     }
 
     .base-info {
-        display: block;
+        display: flex;
+        position: relative;
+        flex-direction: column; /* 縦方向に並べる */
+        margin-bottom: 50px;
     }
 
     .base-info .place {
         font-size: small;
     }
 
-    .explain {
+    .explain p{
         display: none;
+    }
+
+    .more-link {
+        display: flex;
+        justify-content: right !important;
+    }
+
+    .more-link p {
+        font-size: 1em;
     }
 
     .card {
         width: 300px !important;
-        height: 350px !important;
+        height: 250px !important;
         display: flex;
         justify-content: center;
         overflow: hidden;
     }
 
     .card-img-top {
-        height: 224.25px !important;
+        position: relative;
+        height: 60%;
         width: auto;
+        overflow: hidden;
         object-fit: cover;
     }
 
+    .card-body {
+        height: 40%;
+    }
     .card-body .btn {
-        display: none !important;
+        font-size: initial !important;
     }
 
     .card-text {
-        padding: 0;
+        display: none;
     }
 
     .card-set {
+        height: 30%;
         padding: 10px 20px;
     }
 
@@ -602,6 +709,7 @@ section {
     }
 
     .card-3 {
+        height: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -620,6 +728,10 @@ section {
         display: none !important;
     }
 
+    .sns-list {
+        margin-top: 10px !important;
+    }
+
     .sns-link {
         margin-left: 5px;
     }
@@ -636,6 +748,14 @@ section {
 
     .divider {
         margin: 30px 50px;
+    }
+
+    .footer-logo {
+        display: none;
+    }
+
+    .footer-top {
+        justify-content: center;
     }
 
     .footer-links {
