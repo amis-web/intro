@@ -1,6 +1,11 @@
 // Initialize Lucide Icons
 lucide.createIcons();
 
+// Check if marked.js is loaded
+if (typeof marked === 'undefined') {
+    console.error('marked.js is not loaded. Please check the CDN connection.');
+}
+
 // Global variables
 let worksData = [];
 let workContents = {};
@@ -241,7 +246,18 @@ function initializeModal() {
             
             if (work && mdContent) {
                 // Parse markdown to HTML using marked.js
-                const htmlContent = marked.parse(mdContent);
+                let htmlContent;
+                try {
+                    if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+                        htmlContent = marked.parse(mdContent);
+                    } else {
+                        console.error('marked.parse is not available');
+                        htmlContent = mdContent.replace(/\n/g, '<br>');
+                    }
+                } catch (error) {
+                    console.error('Error parsing markdown:', error);
+                    htmlContent = mdContent.replace(/\n/g, '<br>');
+                }
                 
                 // Apply image position class
                 const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
@@ -471,7 +487,18 @@ function openNewsModal(news, mdContent) {
     }
     
     // Parse markdown to HTML using marked.js
-    const htmlContent = marked.parse(mdContent);
+    let htmlContent;
+    try {
+        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+            htmlContent = marked.parse(mdContent);
+        } else {
+            console.error('marked.parse is not available');
+            htmlContent = mdContent.replace(/\n/g, '<br>');
+        }
+    } catch (error) {
+        console.error('Error parsing markdown:', error);
+        htmlContent = mdContent.replace(/\n/g, '<br>');
+    }
     
     // Apply image position class
     const imagePositionClass = `img-position-${news.imagePosition || 'center'}`;
