@@ -14,7 +14,7 @@ let newsContents = {};
 let displayedCount = 0;
 // レスポンシブ対応: モバイル時は3件、PC時は6件表示
 const INITIAL_DISPLAY = window.innerWidth < 768 ? 3 : 6;
-const LOAD_MORE_COUNT = 10;
+const LOAD_MORE_COUNT = 3;
 const NEWS_DISPLAY_COUNT = 3;
 let currentFilter = 'all';
 
@@ -142,13 +142,22 @@ function renderWorkCards(count = INITIAL_DISPLAY, append = false) {
         const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
         
         const cardHTML = `
-            <div class="work-item group cursor-pointer fade-hidden" data-category="${work.category}" data-modal="${work.id}">
-                <div class="overflow-hidden rounded-lg mb-4 relative aspect-video">
-                    <img src="${work.image}" alt="${work.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-2 left-2 bg-${work.badgeColor} text-white text-[10px] font-bold px-2 py-1 rounded">${work.badge}</div>
+            <div class="work-item group cursor-pointer fade-hidden bg-white border border-slate-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300" data-category="${work.category}" data-modal="${work.id}">
+                <div class="flex flex-col">
+                    <!-- モバイル: 画像非表示、PC: 画像表示 -->
+                    <div class="hidden md:block overflow-hidden relative aspect-video">
+                        <img src="${work.image}" alt="${work.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-2 left-2 bg-${work.badgeColor} text-white text-[10px] font-bold px-2 py-1 rounded">${work.badge}</div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <!-- モバイル用バッジ -->
+                        <div class="md:hidden mb-2">
+                            <span class="inline-block bg-${work.badgeColor} text-white text-[10px] font-bold px-2 py-1 rounded">${work.badge}</span>
+                        </div>
+                        <div class="text-xs text-slate-400 mb-1">${work.date}</div>
+                        <h3 class="font-bold text-navy-900 group-hover:text-accent-500 transition-colors">${work.title}</h3>
+                    </div>
                 </div>
-                <div class="text-xs text-slate-400 mb-1">${work.date}</div>
-                <h3 class="font-bold text-navy-900 group-hover:text-accent-500 transition-colors">${work.title}</h3>
             </div>
         `;
         
@@ -241,46 +250,7 @@ function initializeModal() {
     workItems.forEach(item => {
         item.addEventListener('click', () => {
             const modalId = item.getAttribute('data-modal');
-            const work = worksData.find(w => w.id === modalId);
-            const mdContent = workContents[modalId];
-            
-            if (work && mdContent) {
-                // Parse markdown to HTML using marked.js
-                let htmlContent;
-                try {
-                    if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
-                        htmlContent = marked.parse(mdContent);
-                    } else {
-                        console.error('marked.parse is not available');
-                        htmlContent = mdContent.replace(/\n/g, '<br>');
-                    }
-                } catch (error) {
-                    console.error('Error parsing markdown:', error);
-                    htmlContent = mdContent.replace(/\n/g, '<br>');
-                }
-                
-                // Apply image position class
-                const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
-                const modalImageElement = document.querySelector('.modal-image-element');
-                
-                // Remove existing position classes
-                modalImageElement.classList.remove('img-position-top', 'img-position-center', 'img-position-bottom');
-                // Add new position class
-                modalImageElement.classList.add(imagePositionClass);
-                
-                document.querySelector('.modal-badge').textContent = work.badge;
-                document.querySelector('.modal-title').textContent = work.title;
-                document.querySelector('.modal-date').textContent = work.date;
-                modalImageElement.src = work.image;
-                document.querySelector('.modal-body').innerHTML = htmlContent;
-                
-                modal.classList.remove('hidden');
-                modal.classList.add('show');
-                document.body.classList.add('modal-open');
-                
-                // Re-initialize Lucide icons in modal
-                setTimeout(() => lucide.createIcons(), 100);
-            }
+            openWorkModalById(modalId, true);
         });
     });
 
@@ -291,6 +261,11 @@ function initializeModal() {
             modal.classList.add('hidden');
             document.body.classList.remove('modal-open');
         }, 300);
+        
+        // ハッシュをクリア（スクロール位置を維持）
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
     };
 
     modalClose.addEventListener('click', closeModal);
@@ -302,6 +277,56 @@ function initializeModal() {
             closeModal();
         }
     });
+}
+
+// Open work modal by ID (with optional URL update)
+function openWorkModalById(modalId, updateUrl = false) {
+    const modal = document.getElementById('workModal');
+    const work = worksData.find(w => w.id === modalId);
+    const mdContent = workContents[modalId];
+    
+    if (work && mdContent) {
+        // Parse markdown to HTML using marked.js
+        let htmlContent;
+        try {
+            if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+                htmlContent = marked.parse(mdContent);
+            } else {
+                console.error('marked.parse is not available');
+                htmlContent = mdContent.replace(/\n/g, '<br>');
+            }
+        } catch (error) {
+            console.error('Error parsing markdown:', error);
+            htmlContent = mdContent.replace(/\n/g, '<br>');
+        }
+        
+        // Apply image position class
+        const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
+        const modalImageElement = document.querySelector('.modal-image-element');
+        
+        // Remove existing position classes
+        modalImageElement.classList.remove('img-position-top', 'img-position-center', 'img-position-bottom');
+        // Add new position class
+        modalImageElement.classList.add(imagePositionClass);
+        
+        document.querySelector('.modal-badge').textContent = work.badge;
+        document.querySelector('.modal-title').textContent = work.title;
+        document.querySelector('.modal-date').textContent = work.date;
+        modalImageElement.src = work.image;
+        document.querySelector('.modal-body').innerHTML = htmlContent;
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+        
+        // Update URL using hash
+        if (updateUrl) {
+            window.location.hash = `works/${modalId}`;
+        }
+        
+        // Re-initialize Lucide icons in modal
+        setTimeout(() => lucide.createIcons(), 100);
+    }
 }
 
 // Initialize: Load works data when DOM is ready
@@ -413,17 +438,21 @@ function initializeNewsModal() {
     newsItems.forEach(item => {
         item.addEventListener('click', () => {
             const modalId = item.getAttribute('data-modal');
-            const news = newsData.find(n => n.id === modalId);
-            const mdContent = newsContents[modalId];
-            
-            if (news && mdContent) {
-                openNewsModal(news, mdContent);
-            }
+            openNewsModalById(modalId, true);
         });
     });
 }
 
-function openNewsModal(news, mdContent) {
+function openNewsModalById(newsId, updateUrl = false) {
+    const news = newsData.find(n => n.id === newsId);
+    const mdContent = newsContents[newsId];
+    
+    if (news && mdContent) {
+        openNewsModal(news, mdContent, updateUrl);
+    }
+}
+
+function openNewsModal(news, mdContent, updateUrl = false) {
     // Create modal if it doesn't exist
     let newsModal = document.getElementById('newsModal');
     
@@ -474,6 +503,11 @@ function openNewsModal(news, mdContent) {
                 newsModal.classList.add('hidden');
                 document.body.classList.remove('modal-open');
             }, 300);
+            
+            // ハッシュをクリア（スクロール位置を維持）
+            if (window.location.hash) {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
         };
         
         closeBtn.addEventListener('click', closeNewsModal);
@@ -553,6 +587,80 @@ function openNewsModal(news, mdContent) {
         document.body.classList.add('modal-open');
     }, 10);
     
+    // Update URL using hash
+    if (updateUrl) {
+        window.location.hash = `news/${news.id}`;
+    }
+    
     // Re-initialize Lucide icons
     lucide.createIcons();
 }
+
+// 9. Handle URL-based navigation (Hash-based)
+function handleHashNavigation() {
+    const hash = window.location.hash.slice(1); // Remove # symbol
+    
+    if (!hash) {
+        // No hash, close all modals
+        closeAllModals();
+        return;
+    }
+    
+    // Check for works/:id pattern
+    const workMatch = hash.match(/^works\/(.+)$/);
+    if (workMatch) {
+        const workId = workMatch[1];
+        // Wait for data to load if not ready yet
+        if (worksData.length > 0) {
+            openWorkModalById(workId, false);
+        } else {
+            // Retry after data loads
+            setTimeout(() => handleHashNavigation(), 100);
+        }
+        return;
+    }
+    
+    // Check for news/:id pattern
+    const newsMatch = hash.match(/^news\/(.+)$/);
+    if (newsMatch) {
+        const newsId = newsMatch[1];
+        // Wait for data to load if not ready yet
+        if (newsData.length > 0) {
+            openNewsModalById(newsId, false);
+        } else {
+            // Retry after data loads
+            setTimeout(() => handleHashNavigation(), 100);
+        }
+        return;
+    }
+}
+
+// Helper function to close all modals
+function closeAllModals() {
+    const workModal = document.getElementById('workModal');
+    const newsModal = document.getElementById('newsModal');
+    
+    if (workModal && workModal.classList.contains('show')) {
+        workModal.classList.remove('show');
+        setTimeout(() => {
+            workModal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        }, 300);
+    }
+    
+    if (newsModal && newsModal.classList.contains('show')) {
+        newsModal.classList.remove('show');
+        setTimeout(() => {
+            newsModal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        }, 300);
+    }
+}
+
+// Handle browser back/forward buttons and hash changes
+window.addEventListener('hashchange', handleHashNavigation);
+
+// Initialize hash navigation on page load
+window.addEventListener('DOMContentLoaded', () => {
+    handleHashNavigation();
+});
