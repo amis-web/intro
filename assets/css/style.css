@@ -1,531 +1,190 @@
-// Initialize Lucide Icons
-lucide.createIcons();
+/* Custom Styles for smooth scrolling and animations */
+html {
+    scroll-behavior: smooth;
+}
+.fade-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-// Global variables
-let worksData = [];
-let workContents = {};
-let newsData = [];
-let newsContents = {};
-let displayedCount = 0;
-// レスポンシブ対応: モバイル時は3件、PC時は6件表示
-const INITIAL_DISPLAY = window.innerWidth < 768 ? 3 : 6;
-const LOAD_MORE_COUNT = 10;
-const NEWS_DISPLAY_COUNT = 3;
-let currentFilter = 'all';
+/* Gradient Overlay for Hero */
+.hero-overlay {
+    background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)) !important;
+    pointer-events: none;
+}
 
-// 1. Mobile Menu Toggle
-const menuBtn = document.getElementById('menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileLinks = document.querySelectorAll('.mobile-link');
+/* Works Filter Active State */
+.tab-btn.active {
+    background-color: #0f172a;
+    color: white;
+    border-color: #0f172a;
+}
 
-menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-});
+/* SDGs Icon Style */
+.sdgs-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: 900;
+    font-size: 1.25rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-    });
-});
+/* Image Position Control */
+.img-position-top {
+    object-position: top;
+}
+.img-position-center {
+    object-position: center;
+}
+.img-position-bottom {
+    object-position: bottom;
+}
 
-// 2. Intersection Observer for Fade-in Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-visible');
-            // Stop observing once visible
-            observer.unobserve(entry.target); 
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.fade-hidden').forEach(el => {
-    observer.observe(el);
-});
-
-// 3. Number Counter Animation
-const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const counters = entry.target.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const duration = 2000; // ms
-                const increment = target / (duration / 16); 
-                
-                let current = 0;
-                const updateCounter = () => {
-                    current += increment;
-                    if (current < target) {
-                        counter.innerText = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCounter();
-            });
-            counterObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-const statsSection = document.querySelector('.grid.grid-cols-2.md\\:grid-cols-4');
-if(statsSection) counterObserver.observe(statsSection);
-
-// 4. Load Works Data from JSON and Markdown files
-async function loadWorksData() {
-    try {
-        // Load works metadata from JSON
-        const response = await fetch('assets/data/works.json');
-        let data = await response.json();
-        
-        // Sort by date (newest first)
-        worksData = data.sort((a, b) => {
-            const dateA = new Date(a.date.replace(/\./g, '-'));
-            const dateB = new Date(b.date.replace(/\./g, '-'));
-            return dateB - dateA;
-        });
-        
-        // Load all markdown content files
-        for (const work of worksData) {
-            const mdResponse = await fetch(work.contentFile);
-            const mdText = await mdResponse.text();
-            workContents[work.id] = mdText;
-        }
-        
-        // Render initial work cards
-        displayedCount = 0;
-        renderWorkCards(INITIAL_DISPLAY);
-        updateLoadMoreButton();
-        
-        // Initialize filter and modal after rendering
-        initializeWorksFilter();
-        initializeModal();
-        initializeLoadMore();
-        
-    } catch (error) {
-        console.error('Error loading works data:', error);
+/* Modal Styles */
+.modal {
+    backdrop-filter: blur(4px);
+}
+.modal.show {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+.modal.show .modal-content {
+    animation: slideUp 0.3s ease-out;
+}
+/* Prevent background scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-// Render work cards dynamically
-function renderWorkCards(count = INITIAL_DISPLAY, append = false) {
-    const worksGrid = document.getElementById('works-grid');
-    if (!worksGrid) return;
-    
-    if (!append) {
-        worksGrid.innerHTML = '';
-        displayedCount = 0;
-    }
-    
-    // Filter works based on current filter
-    const filteredWorks = currentFilter === 'all' 
-        ? worksData 
-        : worksData.filter(work => work.category === currentFilter);
-    
-    // Determine how many to display
-    const endIndex = Math.min(displayedCount + count, filteredWorks.length);
-    const worksToDisplay = filteredWorks.slice(displayedCount, endIndex);
-    
-    worksToDisplay.forEach(work => {
-        const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
-        
-        const cardHTML = `
-            <div class="work-item group cursor-pointer fade-hidden" data-category="${work.category}" data-modal="${work.id}">
-                <div class="overflow-hidden rounded-lg mb-4 relative aspect-video">
-                    <img src="${work.image}" alt="${work.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-2 left-2 bg-${work.badgeColor} text-white text-[10px] font-bold px-2 py-1 rounded">${work.badge}</div>
-                </div>
-                <div class="text-xs text-slate-400 mb-1">${work.date}</div>
-                <h3 class="font-bold text-navy-900 group-hover:text-accent-500 transition-colors">${work.title}</h3>
-            </div>
-        `;
-        
-        worksGrid.innerHTML += cardHTML;
-    });
-    
-    displayedCount = endIndex;
-    
-    // Trigger fade-in animation for new elements
-    setTimeout(() => {
-        document.querySelectorAll('.work-item.fade-hidden').forEach(el => {
-            el.classList.add('fade-visible');
-        });
-        // Re-initialize Lucide icons
-        lucide.createIcons();
-    }, 100);
+/* Markdown Content Styles */
+.markdown-content h1 {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
-
-// 5. Works Filter Logic
-function initializeWorksFilter() {
-    const tabBtns = document.querySelectorAll('.tab-btn');
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active'); 
-            
-            // Styling manual toggle since I used custom CSS class .active
-            tabBtns.forEach(b => {
-                b.classList.remove('bg-navy-900', 'text-white', 'border-navy-900');
-                b.classList.add('border-slate-200');
-            });
-            btn.classList.remove('border-slate-200');
-            btn.classList.add('bg-navy-900', 'text-white', 'border-navy-900');
-
-            const filter = btn.getAttribute('data-filter');
-            currentFilter = filter;
-            
-            // Reset and re-render with initial count
-            displayedCount = 0;
-            renderWorkCards(INITIAL_DISPLAY, false);
-            updateLoadMoreButton();
-        });
-    });
-    
-    // Initial tab styling
-    const activeTab = document.querySelector('.tab-btn.active');
-    if(activeTab) {
-         activeTab.classList.remove('border-slate-200');
-         activeTab.classList.add('bg-navy-900', 'text-white', 'border-navy-900');
-    }
+.markdown-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 1.75rem;
+    margin-bottom: 0.875rem;
+    line-height: 1.3;
 }
-
-// Update Load More Button visibility
-function updateLoadMoreButton() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (!loadMoreBtn) return;
-    
-    const filteredWorks = currentFilter === 'all' 
-        ? worksData 
-        : worksData.filter(work => work.category === currentFilter);
-    
-    if (displayedCount < filteredWorks.length) {
-        loadMoreBtn.classList.remove('hidden');
-    } else {
-        loadMoreBtn.classList.add('hidden');
-    }
+.markdown-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
 }
-
-// Initialize Load More functionality
-function initializeLoadMore() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (!loadMoreBtn) return;
-    
-    loadMoreBtn.addEventListener('click', () => {
-        renderWorkCards(LOAD_MORE_COUNT, true);
-        updateLoadMoreButton();
-    });
+.markdown-content h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 1.25rem;
+    margin-bottom: 0.625rem;
 }
-
-// 6. Modal Logic
-function initializeModal() {
-    const modal = document.getElementById('workModal');
-    const modalClose = document.querySelector('.modal-close');
-    const modalOverlay = document.querySelector('.modal-overlay');
-
-    // Open modal
-    const workItems = document.querySelectorAll('.work-item');
-    workItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const modalId = item.getAttribute('data-modal');
-            const work = worksData.find(w => w.id === modalId);
-            const mdContent = workContents[modalId];
-            
-            if (work && mdContent) {
-                // Parse markdown to HTML using marked.js
-                const htmlContent = marked.parse(mdContent);
-                
-                // Apply image position class
-                const imagePositionClass = `img-position-${work.imagePosition || 'center'}`;
-                const modalImageElement = document.querySelector('.modal-image-element');
-                
-                // Remove existing position classes
-                modalImageElement.classList.remove('img-position-top', 'img-position-center', 'img-position-bottom');
-                // Add new position class
-                modalImageElement.classList.add(imagePositionClass);
-                
-                document.querySelector('.modal-badge').textContent = work.badge;
-                document.querySelector('.modal-title').textContent = work.title;
-                document.querySelector('.modal-date').textContent = work.date;
-                modalImageElement.src = work.image;
-                document.querySelector('.modal-body').innerHTML = htmlContent;
-                
-                modal.classList.remove('hidden');
-                modal.classList.add('show');
-                document.body.classList.add('modal-open');
-                
-                // Re-initialize Lucide icons in modal
-                setTimeout(() => lucide.createIcons(), 100);
-            }
-        });
-    });
-
-    // Close modal
-    const closeModal = () => {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-            document.body.classList.remove('modal-open');
-        }, 300);
-    };
-
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
-
-    // Close modal with ESC key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            closeModal();
-        }
-    });
+.markdown-content p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
 }
-
-// Initialize: Load works data when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    loadWorksData();
-    loadNewsData();
-});
-
-// 7. Load News Data from JSON and Markdown files
-async function loadNewsData() {
-    try {
-        // Load news metadata from JSON
-        const response = await fetch('assets/data/news.json');
-        let data = await response.json();
-        
-        // Sort by date (newest first)
-        newsData = data.sort((a, b) => {
-            const dateA = new Date(a.date.replace(/\./g, '-'));
-            const dateB = new Date(b.date.replace(/\./g, '-'));
-            return dateB - dateA;
-        });
-        
-        // Load all markdown content files
-        for (const news of newsData) {
-            const mdResponse = await fetch(news.contentFile);
-            const mdText = await mdResponse.text();
-            newsContents[news.id] = mdText;
-        }
-        
-        // Render news items (top 3)
-        renderNewsItems();
-        
-        // Initialize news modal
-        initializeNewsModal();
-        
-    } catch (error) {
-        console.error('Error loading news data:', error);
-    }
+/* ACTIVITIES DETAIL section: Remove spacing between consecutive p elements */
+#activities p + p {
+    margin-top: 0;
 }
-
-// Render news items dynamically
-function renderNewsItems() {
-    const newsGrid = document.getElementById('news-grid');
-    if (!newsGrid) return;
-    
-    newsGrid.innerHTML = '';
-    
-    // Display only the latest 3 news items
-    const newsToDisplay = newsData.slice(0, NEWS_DISPLAY_COUNT);
-    
-    newsToDisplay.forEach(news => {
-        const imagePositionClass = `img-position-${news.imagePosition || 'center'}`;
-        
-        // Determine badge color classes based on categoryColor
-        let badgeColorClass = '';
-        switch(news.categoryColor) {
-            case 'blue':
-                badgeColorClass = 'bg-blue-100 text-blue-600';
-                break;
-            case 'orange':
-                badgeColorClass = 'bg-accent-100 text-accent-600';
-                break;
-            case 'green':
-                badgeColorClass = 'bg-green-100 text-green-600';
-                break;
-            case 'purple':
-                badgeColorClass = 'bg-purple-100 text-purple-600';
-                break;
-            case 'pink':
-                badgeColorClass = 'bg-pink-100 text-pink-600';
-                break;
-            case 'red':
-                badgeColorClass = 'bg-red-100 text-red-600';
-                break;
-            default:
-                badgeColorClass = 'bg-slate-100 text-slate-600';
-        }
-        
-        const cardHTML = `
-            <div class="news-item group cursor-pointer bg-white border border-slate-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300" data-modal="${news.id}">
-                <div class="flex flex-col md:flex-row h-auto md:h-56">
-                    <!-- モバイル: 画像非表示、PC: 画像表示 -->
-                    <div class="hidden md:block md:w-1/4 md:h-full overflow-hidden flex-shrink-0">
-                        <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <div class="p-4 md:p-6 md:w-3/4 flex flex-col justify-center">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="text-xs text-slate-400 font-mono">${news.date}</span>
-                            <span class="px-2 py-0.5 ${badgeColorClass} rounded text-[10px] font-bold">${news.category}</span>
-                        </div>
-                        <h3 class="font-bold text-base md:text-lg text-navy-900 mb-1 md:mb-2 group-hover:text-accent-500 transition-colors line-clamp-2">${news.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 hidden md:block">${news.description || ''}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        newsGrid.innerHTML += cardHTML;
-    });
-    
-    // Re-initialize Lucide icons
-    lucide.createIcons();
+#activities .indent-4 + .indent-4 {
+    margin-top: 0;
 }
-
-// 8. News Modal Logic (updated to use markdown content)
-function initializeNewsModal() {
-    const newsItems = document.querySelectorAll('.news-item');
-    
-    newsItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const modalId = item.getAttribute('data-modal');
-            const news = newsData.find(n => n.id === modalId);
-            const mdContent = newsContents[modalId];
-            
-            if (news && mdContent) {
-                openNewsModal(news, mdContent);
-            }
-        });
-    });
+#activities p.indent-4 {
+    margin-bottom: 0.5rem;
 }
-
-function openNewsModal(news, mdContent) {
-    // Create modal if it doesn't exist
-    let newsModal = document.getElementById('newsModal');
-    
-    if (!newsModal) {
-        // Create modal HTML (keep original design, but with internal scrolling)
-        const modalHTML = `
-            <div id="newsModal" class="modal hidden fixed inset-0 z-50">
-                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20">
-                    <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-                    
-                    <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full relative z-10 max-h-[95vh] flex flex-col">
-                        <button class="news-modal-close absolute top-4 right-4 z-50 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110">
-                            <i data-lucide="x" class="w-6 h-6 text-navy-900"></i>
-                        </button>
-                        
-                        <div class="overflow-y-auto flex-1">
-                            <div class="modal-image-container h-64 md:h-80 overflow-hidden rounded-t-xl">
-                                <img class="news-modal-image w-full h-full object-cover" src="" alt="">
-                            </div>
-                            
-                            <div class="p-6 md:p-10">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span class="news-modal-date text-sm text-slate-400 font-mono"></span>
-                                    <span class="news-modal-badge px-3 py-1 rounded text-xs font-bold"></span>
-                                </div>
-                                
-                                <h2 class="news-modal-title text-2xl md:text-3xl font-bold text-navy-900 mb-6 leading-tight"></h2>
-                                
-                                <div class="news-modal-body markdown-content prose prose-slate max-w-none">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        newsModal = document.getElementById('newsModal');
-        
-        // Add close handlers
-        const closeBtn = newsModal.querySelector('.news-modal-close');
-        const overlay = newsModal.querySelector('.modal-overlay');
-        
-        const closeNewsModal = () => {
-            newsModal.classList.remove('show');
-            setTimeout(() => {
-                newsModal.classList.add('hidden');
-                document.body.classList.remove('modal-open');
-            }, 300);
-        };
-        
-        closeBtn.addEventListener('click', closeNewsModal);
-        overlay.addEventListener('click', closeNewsModal);
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && newsModal.classList.contains('show')) {
-                closeNewsModal();
-            }
-        });
-    }
-    
-    // Parse markdown to HTML using marked.js
-    const htmlContent = marked.parse(mdContent);
-    
-    // Apply image position class
-    const imagePositionClass = `img-position-${news.imagePosition || 'center'}`;
-    const modalImageElement = newsModal.querySelector('.news-modal-image');
-    
-    // Remove existing position classes
-    modalImageElement.classList.remove('img-position-top', 'img-position-center', 'img-position-bottom');
-    // Add new position class
-    modalImageElement.classList.add(imagePositionClass);
-    
-    // Update modal content
-    modalImageElement.src = news.image;
-    newsModal.querySelector('.news-modal-date').textContent = news.date;
-    newsModal.querySelector('.news-modal-title').textContent = news.title;
-    newsModal.querySelector('.news-modal-body').innerHTML = htmlContent;
-    
-    // Set badge color based on categoryColor
-    const badge = newsModal.querySelector('.news-modal-badge');
-    badge.textContent = news.category;
-    
-    // Remove all badge color classes
-    badge.className = 'news-modal-badge px-3 py-1 rounded text-xs font-bold';
-    
-    // Add appropriate color class
-    switch(news.categoryColor) {
-        case 'blue':
-            badge.classList.add('bg-blue-100', 'text-blue-600');
-            break;
-        case 'orange':
-            badge.classList.add('bg-accent-100', 'text-accent-600');
-            break;
-        case 'green':
-            badge.classList.add('bg-green-100', 'text-green-600');
-            break;
-        case 'purple':
-            badge.classList.add('bg-purple-100', 'text-purple-600');
-            break;
-        case 'pink':
-            badge.classList.add('bg-pink-100', 'text-pink-600');
-            break;
-        case 'red':
-            badge.classList.add('bg-red-100', 'text-red-600');
-            break;
-        default:
-            badge.classList.add('bg-slate-100', 'text-slate-600');
-    }
-    
-    // Show modal
-    newsModal.classList.remove('hidden');
-    setTimeout(() => {
-        newsModal.classList.add('show');
-        document.body.classList.add('modal-open');
-    }, 10);
-    
-    // Re-initialize Lucide icons
-    lucide.createIcons();
+#activities p.indent-4:last-of-type {
+    margin-bottom: 1.5rem;
+}
+.markdown-content ul, .markdown-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+.markdown-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+}
+.markdown-content ul li {
+    list-style-type: disc;
+}
+.markdown-content ol li {
+    list-style-type: decimal;
+}
+.markdown-content strong {
+    font-weight: 700;
+    color: #0f172a;
+}
+.markdown-content em {
+    font-style: italic;
+}
+.markdown-content code {
+    background-color: #f1f5f9;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.875em;
+}
+.markdown-content pre {
+    background-color: #f1f5f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+.markdown-content blockquote {
+    border-left: 4px solid #f97316;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    color: #475569;
+    font-style: italic;
+}
+.markdown-content hr {
+    border: 0;
+    border-top: 2px solid #e2e8f0;
+    margin: 2rem 0;
+}
+.markdown-content a {
+    color: #f97316;
+    text-decoration: underline;
+}
+.markdown-content a:hover {
+    color: #ea580c;
 }
