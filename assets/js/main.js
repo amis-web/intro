@@ -4,9 +4,12 @@ lucide.createIcons();
 // Global variables
 let worksData = [];
 let workContents = {};
+let newsData = [];
+let newsContents = {};
 let displayedCount = 0;
 const INITIAL_DISPLAY = 6;
 const LOAD_MORE_COUNT = 10;
+const NEWS_DISPLAY_COUNT = 3;
 let currentFilter = 'all';
 
 // 1. Mobile Menu Toggle
@@ -287,4 +290,240 @@ function initializeModal() {
 // Initialize: Load works data when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     loadWorksData();
+    loadNewsData();
 });
+
+// 7. Load News Data from JSON and Markdown files
+async function loadNewsData() {
+    try {
+        // Load news metadata from JSON
+        const response = await fetch('assets/data/news.json');
+        let data = await response.json();
+        
+        // Sort by date (newest first)
+        newsData = data.sort((a, b) => {
+            const dateA = new Date(a.date.replace(/\./g, '-'));
+            const dateB = new Date(b.date.replace(/\./g, '-'));
+            return dateB - dateA;
+        });
+        
+        // Load all markdown content files
+        for (const news of newsData) {
+            const mdResponse = await fetch(news.contentFile);
+            const mdText = await mdResponse.text();
+            newsContents[news.id] = mdText;
+        }
+        
+        // Render news items (top 3)
+        renderNewsItems();
+        
+        // Initialize news modal
+        initializeNewsModal();
+        
+    } catch (error) {
+        console.error('Error loading news data:', error);
+    }
+}
+
+// Render news items dynamically
+function renderNewsItems() {
+    const newsGrid = document.getElementById('news-grid');
+    if (!newsGrid) return;
+    
+    newsGrid.innerHTML = '';
+    
+    // Display only the latest 3 news items
+    const newsToDisplay = newsData.slice(0, NEWS_DISPLAY_COUNT);
+    
+    newsToDisplay.forEach(news => {
+        const imagePositionClass = `img-position-${news.imagePosition || 'center'}`;
+        
+        // Determine badge color classes based on categoryColor
+        let badgeColorClass = '';
+        switch(news.categoryColor) {
+            case 'blue':
+                badgeColorClass = 'bg-blue-100 text-blue-600';
+                break;
+            case 'orange':
+                badgeColorClass = 'bg-accent-100 text-accent-600';
+                break;
+            case 'green':
+                badgeColorClass = 'bg-green-100 text-green-600';
+                break;
+            case 'purple':
+                badgeColorClass = 'bg-purple-100 text-purple-600';
+                break;
+            case 'pink':
+                badgeColorClass = 'bg-pink-100 text-pink-600';
+                break;
+            case 'red':
+                badgeColorClass = 'bg-red-100 text-red-600';
+                break;
+            default:
+                badgeColorClass = 'bg-slate-100 text-slate-600';
+        }
+        
+        const cardHTML = `
+            <div class="news-item group cursor-pointer bg-white border border-slate-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300" data-modal="${news.id}">
+                <div class="flex flex-col md:flex-row h-auto md:h-56">
+                    <div class="md:w-1/4 h-48 md:h-full overflow-hidden flex-shrink-0">
+                        <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6 md:w-3/4 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs text-slate-400 font-mono">${news.date}</span>
+                            <span class="px-2 py-0.5 ${badgeColorClass} rounded text-[10px] font-bold">${news.category}</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-navy-900 mb-2 group-hover:text-accent-500 transition-colors line-clamp-2">${news.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2">${news.description || ''}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        newsGrid.innerHTML += cardHTML;
+    });
+    
+    // Re-initialize Lucide icons
+    lucide.createIcons();
+}
+
+// 8. News Modal Logic (updated to use markdown content)
+function initializeNewsModal() {
+    const newsItems = document.querySelectorAll('.news-item');
+    
+    newsItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const modalId = item.getAttribute('data-modal');
+            const news = newsData.find(n => n.id === modalId);
+            const mdContent = newsContents[modalId];
+            
+            if (news && mdContent) {
+                openNewsModal(news, mdContent);
+            }
+        });
+    });
+}
+
+function openNewsModal(news, mdContent) {
+    // Create modal if it doesn't exist
+    let newsModal = document.getElementById('newsModal');
+    
+    if (!newsModal) {
+        // Create modal HTML (keep original design, but with internal scrolling)
+        const modalHTML = `
+            <div id="newsModal" class="modal hidden fixed inset-0 z-50">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20">
+                    <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+                    
+                    <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full relative z-10 max-h-[95vh] flex flex-col">
+                        <button class="news-modal-close absolute top-4 right-4 z-50 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110">
+                            <i data-lucide="x" class="w-6 h-6 text-navy-900"></i>
+                        </button>
+                        
+                        <div class="overflow-y-auto flex-1">
+                            <div class="modal-image-container h-64 md:h-80 overflow-hidden rounded-t-xl">
+                                <img class="news-modal-image w-full h-full object-cover" src="" alt="">
+                            </div>
+                            
+                            <div class="p-6 md:p-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="news-modal-date text-sm text-slate-400 font-mono"></span>
+                                    <span class="news-modal-badge px-3 py-1 rounded text-xs font-bold"></span>
+                                </div>
+                                
+                                <h2 class="news-modal-title text-2xl md:text-3xl font-bold text-navy-900 mb-6 leading-tight"></h2>
+                                
+                                <div class="news-modal-body markdown-content prose prose-slate max-w-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        newsModal = document.getElementById('newsModal');
+        
+        // Add close handlers
+        const closeBtn = newsModal.querySelector('.news-modal-close');
+        const overlay = newsModal.querySelector('.modal-overlay');
+        
+        const closeNewsModal = () => {
+            newsModal.classList.remove('show');
+            setTimeout(() => {
+                newsModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }, 300);
+        };
+        
+        closeBtn.addEventListener('click', closeNewsModal);
+        overlay.addEventListener('click', closeNewsModal);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && newsModal.classList.contains('show')) {
+                closeNewsModal();
+            }
+        });
+    }
+    
+    // Parse markdown to HTML using marked.js
+    const htmlContent = marked.parse(mdContent);
+    
+    // Apply image position class
+    const imagePositionClass = `img-position-${news.imagePosition || 'center'}`;
+    const modalImageElement = newsModal.querySelector('.news-modal-image');
+    
+    // Remove existing position classes
+    modalImageElement.classList.remove('img-position-top', 'img-position-center', 'img-position-bottom');
+    // Add new position class
+    modalImageElement.classList.add(imagePositionClass);
+    
+    // Update modal content
+    modalImageElement.src = news.image;
+    newsModal.querySelector('.news-modal-date').textContent = news.date;
+    newsModal.querySelector('.news-modal-title').textContent = news.title;
+    newsModal.querySelector('.news-modal-body').innerHTML = htmlContent;
+    
+    // Set badge color based on categoryColor
+    const badge = newsModal.querySelector('.news-modal-badge');
+    badge.textContent = news.category;
+    
+    // Remove all badge color classes
+    badge.className = 'news-modal-badge px-3 py-1 rounded text-xs font-bold';
+    
+    // Add appropriate color class
+    switch(news.categoryColor) {
+        case 'blue':
+            badge.classList.add('bg-blue-100', 'text-blue-600');
+            break;
+        case 'orange':
+            badge.classList.add('bg-accent-100', 'text-accent-600');
+            break;
+        case 'green':
+            badge.classList.add('bg-green-100', 'text-green-600');
+            break;
+        case 'purple':
+            badge.classList.add('bg-purple-100', 'text-purple-600');
+            break;
+        case 'pink':
+            badge.classList.add('bg-pink-100', 'text-pink-600');
+            break;
+        case 'red':
+            badge.classList.add('bg-red-100', 'text-red-600');
+            break;
+        default:
+            badge.classList.add('bg-slate-100', 'text-slate-600');
+    }
+    
+    // Show modal
+    newsModal.classList.remove('hidden');
+    setTimeout(() => {
+        newsModal.classList.add('show');
+        document.body.classList.add('modal-open');
+    }, 10);
+    
+    // Re-initialize Lucide icons
+    lucide.createIcons();
+}
