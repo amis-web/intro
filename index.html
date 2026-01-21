@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生ボランティア団体 NEXUS | 地域のために 社会のために</title>
-    <meta name="description" content="学習支援、遊びの会、献血呼びかけを行う学生ボランティア団体NEXUSの公式Webサイトです。">
+    <title>学生ボランティア団体 AMIS | 地域のために 社会のために</title>
+    <meta name="description" content="様々な活動行う学生ボランティア団体AMISの公式Webサイトです。">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +43,7 @@
                         sdgs: {
                             3: '#4C9F38', // Good Health
                             4: '#C5192D', // Quality Education
+                            10: '#DD1367', // Reduced Inequalities
                             11: '#FD9D24', // Sustainable Cities
                             17: '#19486A', // Partnerships
                         }
@@ -71,11 +72,11 @@
 
     <!-- HEADER -->
     <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300" id="header">
-        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="container mx-auto px-6 md:px-8 h-16 md:h-20 flex items-center justify-between">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 bg-navy-900 text-white flex items-center justify-center rounded font-bold text-xl group-hover:bg-accent-500 transition-colors">N</div>
-                <span class="text-xl font-bold text-navy-900 tracking-tight">NEXUS<span class="text-xs font-normal ml-2 text-slate-500 hidden sm:inline-block">学生ボランティア団体</span></span>
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 text-white flex items-center justify-center rounded font-bold text-lg md:text-xl group-hover:bg-accent-500 transition-colors">A</div>
+                <span class="text-lg md:text-xl font-bold text-navy-900 tracking-tight">AMIS<span class="text-xs font-normal ml-2 text-slate-500 hidden sm:inline-block">学生ボランティアサークル</span></span>
             </a>
 
             <!-- Desktop Nav -->
@@ -98,7 +99,7 @@
         </div>
 
         <!-- Mobile Nav Dropdown -->
-        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl border-t border-slate-100 lg:hidden">
+        <div id="mobile-menu" class="hidden absolute top-16 md:top-20 left-0 w-full bg-white shadow-xl border-t border-slate-100 lg:hidden">
             <div class="flex flex-col p-6 space-y-4">
                 <a href="#home" class="mobile-link text-lg font-medium border-b border-slate-100 pb-2">HOME</a>
                 <a href="#activities" class="mobile-link text-lg font-medium border-b border-slate-100 pb-2">ACTIVITIES</a>
@@ -112,7 +113,7 @@
     </header>
 
     <!-- 1. HOME (Hero Section) -->
-    <section id="home" class="relative h-screen min-h-[600px] flex items-center justify-center pt-20 overflow-hidden">
+    <section id="home" class="relative min-h-[85vh] md:min-h-[600px] flex items-center justify-center pt-16 md:pt-20 overflow-hidden">
         <!-- Background Image Placeholder -->
         <div class="absolute inset-0 z-0">
             <!-- Image: Meeting or Activity -->
@@ -120,33 +121,66 @@
             <div class="hero-overlay absolute inset-0"></div>
         </div>
 
-        <div class="container mx-auto px-6 relative z-10 text-white text-center md:text-left fade-hidden">
-            <span class="inline-block py-1 px-3 border border-white/30 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+        <div class="container mx-auto px-6 md:px-8 relative z-10 text-white text-center md:text-left fade-hidden">
+            <span class="inline-block py-1 px-3 border border-white/30 rounded-full text-xs md:text-sm font-medium mb-4 md:mb-6 backdrop-blur-sm">
                 学生の力で、確かな未来を創る
             </span>
-            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 md:mb-6 tracking-tight">
                 地域のために<br class="md:hidden">社会のために
             </h1>
-            <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl leading-relaxed">
-                確実な運営力とSDGsへの深い理解。<br>
+            <p class="text-base sm:text-lg md:text-xl text-slate-200 mb-6 md:mb-10 max-w-2xl leading-relaxed mx-auto md:mx-0">
                 私たちは「信頼」と「行動力」で地域の課題解決に伴走する<br class="hidden md:block">
-                プロフェッショナルな学生団体です。
+                プロフェッショナルな学生サークルです。
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="#service" class="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded font-bold text-center transition-all hover:shadow-lg shadow-orange-900/50 flex items-center justify-center gap-2">
-                    活動依頼について <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center md:justify-start max-w-2xl mx-auto md:mx-0">
+                <a href="#service" class="bg-accent-500 hover:bg-accent-600 text-white px-5 py-3 md:px-6 md:py-3.5 rounded font-bold text-sm md:text-base text-center transition-all hover:shadow-lg shadow-orange-900/50 flex items-center justify-center gap-2 whitespace-nowrap">
+                    活動依頼 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
-                <a href="#activities" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-4 rounded font-bold text-center backdrop-blur-sm transition-all">
-                    活動内容を見る
+                <a href="#works" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-5 py-3 md:px-6 md:py-3.5 rounded font-bold text-sm md:text-base text-center backdrop-blur-sm transition-all whitespace-nowrap">
+                    活動実績を見る
                 </a>
             </div>
         </div>
     </section>
 
     <!-- CORE ACTIVITIES (Summary Cards) -->
-    <section class="relative z-20 -mt-20 px-6">
+    <section class="relative z-20 py-8 md:py-12 md:-mt-20 md:pt-0 px-6 md:px-8">
         <div class="container mx-auto">
-            <div class="grid md:grid-cols-3 gap-6">
+            <!-- モバイル: コンパクトなグリッドデザイン -->
+            <div class="grid grid-cols-3 md:hidden gap-3">
+                <!-- Activity 1: 学習支援 -->
+                <a href="#activity-detail-edu" class="block group">
+                    <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-all border-l-4 border-sdgs-4 fade-hidden h-[120px] flex flex-col items-center justify-center">
+                        <div class="w-10 h-10 bg-red-50 text-sdgs-4 rounded-full flex items-center justify-center mb-3">
+                            <i data-lucide="book-open" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xs font-bold text-navy-900 text-center leading-tight">学習支援<br>事業</h3>
+                    </div>
+                </a>
+
+                <!-- Activity 2: 遊びの会 -->
+                <a href="#activity-detail-play" class="block group">
+                    <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-all border-l-4 border-sdgs-11 fade-hidden h-[120px] flex flex-col items-center justify-center">
+                        <div class="w-10 h-10 bg-orange-50 text-sdgs-11 rounded-full flex items-center justify-center mb-3">
+                            <i data-lucide="smile" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xs font-bold text-navy-900 text-center leading-tight">遊びの会</h3>
+                    </div>
+                </a>
+
+                <!-- Activity 3: 献血呼びかけ -->
+                <a href="#activity-detail-blood" class="block group">
+                    <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-all border-l-4 border-sdgs-3 fade-hidden h-[120px] flex flex-col items-center justify-center">
+                        <div class="w-10 h-10 bg-green-50 text-sdgs-3 rounded-full flex items-center justify-center mb-3">
+                            <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xs font-bold text-navy-900 text-center leading-tight">献血<br>呼びかけ</h3>
+                    </div>
+                </a>
+            </div>
+
+            <!-- PC: 元のデザイン -->
+            <div class="hidden md:grid md:grid-cols-3 gap-6">
                 <!-- Activity 1: 学習支援 -->
                 <a href="#activity-detail-edu" class="block group">
                     <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-sdgs-4 fade-hidden h-full">
@@ -154,11 +188,14 @@
                             <div class="w-14 h-14 bg-red-50 text-sdgs-4 rounded-full flex items-center justify-center">
                                 <i data-lucide="book-open" class="w-7 h-7"></i>
                             </div>
-                            <div class="bg-sdgs-4 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 4</div>
+                            <div class="flex gap-1">
+                                <div class="bg-sdgs-4 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 4</div>
+                                <div class="bg-sdgs-10 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 10</div>
+                            </div>
                         </div>
                         <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-sdgs-4 transition-colors">学習支援事業</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                            経済的困難を抱える家庭の児童向けに、無料の学習教室を運営。教育格差の是正に取り組みます。
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 indent-4">
+                            様々な事情を持つ子どもへの学習支援事業。学習面に加え、学生との交流や遊びを通して自己肯定感や社会性を育みます。
                         </p>
                         <span class="text-xs font-bold text-sdgs-4 tracking-wider flex items-center gap-1">
                             詳細を見る <i data-lucide="chevron-down" class="w-3 h-3"></i>
@@ -175,12 +212,12 @@
                             </div>
                             <div class="flex gap-1">
                                 <div class="bg-sdgs-3 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 3</div>
-                                <div class="bg-sdgs-11 text-white text-[10px] font-bold px-2 py-1 rounded">11</div>
+                                <div class="bg-sdgs-11 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 11</div>
                             </div>
                         </div>
                         <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-sdgs-11 transition-colors">遊びの会</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                            子どもたちに「安心できる居場所」と「本気の遊び」を提供。公園遊びやボードゲーム大会を主催します。
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 indent-4">
+                            地域の未就学児〜小学生との「体を動かす遊び」に長年参加。遊び場の提供を通じ、地域交流を図るボランティアです。
                         </p>
                         <span class="text-xs font-bold text-sdgs-11 tracking-wider flex items-center gap-1">
                             詳細を見る <i data-lucide="chevron-down" class="w-3 h-3"></i>
@@ -198,7 +235,7 @@
                             <div class="bg-sdgs-3 text-white text-[10px] font-bold px-2 py-1 rounded">SDGs 3</div>
                         </div>
                         <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-sdgs-3 transition-colors">献血呼びかけ</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 indent-4">
                             若年層を含めた全世代を対象に献血について知ってもらうため、市内のショッピングモールや学内で献血の呼びかけをしています。
                         </p>
                         <span class="text-xs font-bold text-sdgs-3 tracking-wider flex items-center gap-1">
@@ -211,42 +248,42 @@
     </section>
 
     <!-- IMPACT -->
-    <section class="pt-20 pb-12 bg-white">
-        <div class="container mx-auto px-6">
+    <section class="py-12 md:py-16 lg:pt-20 lg:pb-12 bg-white">
+        <div class="container mx-auto px-6 md:px-8">
             <!-- Numbers -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center fade-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center fade-hidden">
                 <div>
-                    <div class="text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="50">0</span>+</div>
-                    <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">年間活動数</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="200">0</span>+</div>
+                    <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">年間活動数</div>
                 </div>
                 <div>
-                    <div class="text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="120">0</span>名</div>
-                    <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">所属メンバー</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="44">0</span>名</div>
+                    <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">所属メンバー</div>
                 </div>
                 <div>
-                    <div class="text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="3000">0</span>+</div>
-                    <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">累計動員数</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="1500">0</span>+</div>
+                    <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">年間累計動員数</div>
                 </div>
                 <div>
-                    <div class="text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="15">0</span>社</div>
-                    <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">連携パートナー</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-navy-900 mb-2"><span class="counter" data-target="8">0</span>団体</div>
+                    <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">連携団体</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ACTIVITIES DETAIL (New Section) -->
-    <section id="activities" class="py-16 bg-base-200">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16 fade-hidden">
-                <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">Our Activities</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-navy-900 mt-2">活動詳細</h2>
-                <p class="text-slate-600 mt-4">AMISが取り組む、3つの主要な社会貢献活動について</p>
+    <section id="activities" class="py-12 md:py-16 lg:py-20 bg-base-200">
+        <div class="container mx-auto px-6 md:px-8">
+            <div class="text-center mb-12 md:mb-16 fade-hidden">
+                <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">Our Activities</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-900 mt-2">活動詳細</h2>
+                <p class="text-sm md:text-base text-slate-600 mt-3 md:mt-4 px-4">AMISが取り組む、3つの主要な社会貢献活動について</p>
             </div>
 
-            <div class="space-y-24">
+            <div class="space-y-16 md:space-y-20 lg:space-y-24">
                 <!-- Activity 1 Detail -->
-                <div id="activity-detail-edu" class="flex flex-col md:flex-row gap-12 items-center fade-hidden scroll-mt-24">
+                <div id="activity-detail-edu" class="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 items-center fade-hidden scroll-mt-24">
                     <div class="md:w-1/2">
                         <img src="assets/images/main_1.jpg" alt="学習支援の様子" class="rounded-lg shadow-xl w-full">
                     </div>
@@ -255,9 +292,11 @@
                             <img src="assets/images/sdg_icon_04_ja_2.png" alt="SDGs 4" class="h-16 w-16 object-contain">
                             <img src="assets/images/sdg_icon_10_ja_3.png" alt="SDGs 10" class="h-16 w-16 object-contain">
                         </div>
-                        <h3 class="text-2xl font-bold text-navy-900 mb-4">学習支援事業</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            様々な家庭の事情や特性を持った子どもたちを対象に行われている、無料の学習支援事業です。<br>
+                        <h3 class="text-xl md:text-2xl font-bold text-navy-900 mb-3 md:mb-4">学習支援事業</h3>
+                        <p class="text-sm md:text-base text-slate-600 leading-relaxed mb-2 indent-4">
+                            様々な家庭の事情や特性を持った子どもたちを対象に行われている、無料の学習支援事業です。
+                        </p>
+                        <p class="text-sm md:text-base text-slate-600 leading-relaxed mb-4 md:mb-6 indent-4">
                             学習だけでなく、学生とのコミュニケーションや遊びの時間を通して自己肯定感や社会性の向上にも寄与しています。
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700">
@@ -279,8 +318,10 @@
                             <img src="assets/images/sdg_icon_11_ja_2.png" alt="SDGs 11" class="h-16 w-16 object-contain">
                         </div>
                         <h3 class="text-2xl font-bold text-navy-900 mb-4">遊びの会</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            地域の保育園などを会場に、地域の未就学児から小学生までを対象とし、体を動かす遊びを開催されているイベントです。<br>
+                        <p class="text-slate-600 leading-relaxed mb-2 indent-4">
+                            地域の保育園などを会場に、地域の未就学児から小学生までを対象とし、体を動かす遊びを開催されているイベントです。
+                        </p>
+                        <p class="text-slate-600 leading-relaxed mb-6 indent-4">
                             AMISでは長期にわたり、この活動にボランティアとして参加することで、様々な子どもたちの遊びの場を作ることはもちろん、地域との交流も図っています。
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700">
@@ -301,8 +342,10 @@
                             <img src="assets/images/sdg_icon_03_ja_2.png" alt="SDGs 3" class="h-16 w-16 object-contain">
                         </div>
                         <h3 class="text-2xl font-bold text-navy-900 mb-4">献血呼びかけ</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            血液は人工的に作ることができないことに加え、若年層の献血者数減少という課題があります。<br>
+                        <p class="text-slate-600 leading-relaxed mb-2 indent-4">
+                            血液は人工的に作ることができないことに加え、若年層の献血者数減少という課題があります。
+                        </p>
+                        <p class="text-slate-600 leading-relaxed mb-6 indent-4">
                             この課題に対して、聖隷クリストファー大学と共に"浜松学推"という団体としてショッピングモールや学内で献血の呼びかけをしています。
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700">
@@ -317,12 +360,12 @@
     </section>
 
     <!-- NEWS (Redesigned) -->
-    <section id="news" class="py-24 bg-white border-y border-slate-100">
-        <div class="container mx-auto px-6">
-            <div class="flex justify-between items-end mb-12 fade-hidden">
+    <section id="news" class="py-12 md:py-16 lg:py-24 bg-white border-y border-slate-100">
+        <div class="container mx-auto px-6 md:px-8">
+            <div class="flex justify-between items-end mb-8 md:mb-12 fade-hidden">
                 <div>
-                    <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">News & Topics</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-navy-900 mt-2">最新情報</h2>
+                    <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">News & Topics</span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-900 mt-2">最新情報</h2>
                 </div>
                 <!-- <a href="#" class="text-sm text-accent-500 font-bold hover:underline flex items-center gap-1">
                     一覧を見る <i data-lucide="chevron-right" class="w-4 h-4"></i>
@@ -336,19 +379,19 @@
     </section>
 
     <!-- 2. ABOUT (Updated Design) -->
-    <section id="about" class="py-24 bg-base-200">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16 fade-hidden">
-                <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">About Us</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-navy-900 mt-2">団体概要・体制</h2>
+    <section id="about" class="py-12 md:py-16 lg:py-24 bg-base-200">
+        <div class="container mx-auto px-6 md:px-8">
+            <div class="text-center mb-12 md:mb-16 fade-hidden">
+                <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">About Us</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-900 mt-2">団体概要・体制</h2>
                 <div class="w-12 h-1 bg-accent-500 mx-auto mt-6"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 mb-20 fade-hidden">
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-20 fade-hidden">
                 <!-- Text Content -->
                 <div class="flex flex-col justify-center">
-                    <h3 class="text-2xl font-bold text-navy-900 mb-6">「想い」だけでなく「仕組み」で<br>社会に貢献する。</h3>
-                    <p class="text-slate-600 leading-relaxed mb-8">
+                    <h3 class="text-xl md:text-2xl font-bold text-navy-900 mb-4 md:mb-6">「想い」だけでなく「仕組み」で<br>社会に貢献する。</h3>
+                    <p class="text-sm md:text-base text-slate-600 leading-relaxed mb-6 md:mb-8 indent-4">
                         私たちAMISは、社会課題に対し、持続可能な解決策を提示するための「組織」です。
                         3つの主軸活動（学習支援・遊び・献血）それぞれに専属の代表メンバーを配置し、責任ある運営体制を敷いています。
                     </p>
@@ -386,18 +429,18 @@
 
                 <!-- Organization Info (Improved Design) -->
                 <div>
-                    <h3 class="text-xl font-bold text-navy-900 mb-6 flex items-center gap-2">
-                        <i data-lucide="building-2" class="w-6 h-6 text-navy-900"></i> 基本情報
+                    <h3 class="text-lg md:text-xl font-bold text-navy-900 mb-4 md:mb-6 flex items-center gap-2">
+                        <i data-lucide="building-2" class="w-5 h-5 md:w-6 md:h-6 text-navy-900"></i> 基本情報
                     </h3>
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                         <div class="divide-y divide-slate-100">
-                            <div class="p-5 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-                                <div class="w-10 h-10 bg-navy-50 text-navy-900 rounded-full flex items-center justify-center shrink-0">
-                                    <i data-lucide="flag" class="w-5 h-5"></i>
+                            <div class="p-4 md:p-5 flex items-center gap-3 md:gap-4 hover:bg-slate-50 transition-colors">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-50 text-navy-900 rounded-full flex items-center justify-center shrink-0">
+                                    <i data-lucide="flag" class="w-4 h-4 md:w-5 md:h-5"></i>
                                 </div>
                                 <div>
-                                    <div class="text-xs text-slate-400 font-bold uppercase">団体名</div>
-                                    <div class="font-bold text-navy-900">静岡大学ボランティアサークル AMIS</div>
+                                    <div class="text-[10px] md:text-xs text-slate-400 font-bold uppercase">団体名</div>
+                                    <div class="font-bold text-navy-900 text-sm md:text-base">静岡大学ボランティアサークル AMIS</div>
                                 </div>
                             </div>
                             <div class="p-5 flex items-center gap-4 hover:bg-slate-50 transition-colors">
@@ -435,25 +478,26 @@
     </section>
 
     <!-- 3. SERVICE -->
-    <section id="service" class="py-24 bg-navy-900 text-white relative overflow-hidden">
+    <section id="service" class="py-12 md:py-16 lg:py-24 bg-navy-900 text-white relative overflow-hidden">
         <!-- Background decorative elements -->
         <div class="absolute top-0 right-0 w-1/2 h-full bg-navy-800 skew-x-12 opacity-50 z-0 pointer-events-none"></div>
 
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 fade-hidden">
-                <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">Service Menu</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">自治体・イベント主催者様へ</h2>
-                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">
-                    学生独自のバイタリティー・企画力・運営力・現場力を活かし、<br>貴団体のプロジェクトを強力にバックアップします。
+        <div class="container mx-auto px-6 md:px-8 relative z-10">
+            <div class="text-center mb-12 md:mb-16 fade-hidden">
+                <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">Service Menu</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mt-2">自治体・イベント主催者様へ</h2>
+                <p class="text-sm md:text-base text-slate-400 mt-3 md:mt-4 max-w-2xl mx-auto px-4 leading-relaxed">
+                    学生独自のバイタリティー・企画力・運営力・現場力を活かし、<br class="hidden sm:block">
+                    貴団体のプロジェクトを強力にバックアップします。
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
                 <!-- Planning -->
-                <div class="bg-navy-800 border border-navy-700 p-8 rounded-lg hover:border-accent-500 transition-colors fade-hidden">
-                    <i data-lucide="pen-tool" class="w-10 h-10 text-accent-500 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">Planning</h3>
-                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                <div class="bg-navy-800 border border-navy-700 p-6 md:p-8 rounded-lg hover:border-accent-500 transition-colors fade-hidden">
+                    <i data-lucide="pen-tool" class="w-8 h-8 md:w-10 md:h-10 text-accent-500 mb-4 md:mb-6"></i>
+                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">Planning</h3>
+                    <p class="text-slate-300 text-xs md:text-sm mb-4 md:mb-6 leading-relaxed indent-4">
                         普段の活動やバックグラウンドのノウハウを転用したワークショップ開発や、学生視点を取り入れたイベント企画立案などを行います。
                     </p>
                     <ul class="text-sm text-slate-400 space-y-2">
@@ -466,7 +510,7 @@
                 <div class="bg-navy-800 border border-navy-700 p-8 rounded-lg hover:border-accent-500 transition-colors fade-hidden" style="transition-delay: 100ms;">
                     <i data-lucide="mic-2" class="w-10 h-10 text-accent-500 mb-6"></i>
                     <h3 class="text-2xl font-bold mb-4">Operation</h3>
-                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed indent-4">
                         当日の進行管理、来場者の誘導、受付、司会など、イベントのフロント業務を担います。
                     </p>
                     <ul class="text-sm text-slate-400 space-y-2">
@@ -479,7 +523,7 @@
                 <div class="bg-navy-800 border border-navy-700 p-8 rounded-lg hover:border-accent-500 transition-colors fade-hidden" style="transition-delay: 200ms;">
                     <i data-lucide="hammer" class="w-10 h-10 text-accent-500 mb-6"></i>
                     <h3 class="text-2xl font-bold mb-4">Labor</h3>
-                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed indent-4">
                         イベント会場の設営、撤収、清掃活動など、体力を要する業務もお任せください。<br>チームワーク良く迅速に行動します。
                     </p>
                     <ul class="text-sm text-slate-400 space-y-2">
@@ -491,16 +535,16 @@
 
             <!-- Notice -->
             <div class="flex items-start gap-3">
-                    <i data-lucide="info" class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5"></i>
-                    <p class="text-sm text-slate-300 leading-relaxed">
-                        メンバーは学生のため、試験期間や学業活動などにより参加人数が変動する場合がございますが、事前の調整を行い、最大限の協力体制を整えてサポートさせていただきます。お気軽にご相談ください。
-                    </p>
-                </div>
+                <i data-lucide="info" class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5"></i>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    メンバーは学生のため、試験期間や学業活動などにより参加人数が変動する場合がございますが、事前の調整を行い、最大限の協力体制を整えてサポートさせていただきます。お気軽にご相談ください。
+                </p>
+            </div>
             
             <!-- Flow -->
-            <div class="bg-navy-800/50 rounded-lg p-8 md:p-12 fade-hidden">
-                <h4 class="text-center font-bold mb-8">ご依頼の流れ</h4>
-                <div class="flex flex-col md:flex-row justify-between items-center relative gap-8">
+            <div class="bg-navy-800/50 rounded-lg p-6 md:p-8 lg:p-12 mt-12 md:mt-16 fade-hidden">
+                <h4 class="text-center font-bold mb-6 md:mb-8 text-base md:text-lg">ご依頼の流れ</h4>
+                <div class="flex flex-col md:flex-row justify-between items-center relative gap-6 md:gap-8">
                     <div class="text-center relative z-10 bg-navy-900 p-4 rounded w-full md:w-auto">
                         <div class="text-accent-500 font-bold mb-2">STEP 01</div>
                         <div class="text-sm">お問い合わせ</div>
@@ -527,28 +571,28 @@
     </section>
 
     <!-- 5. WORKS -->
-    <section id="works" class="py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 fade-hidden">
-                <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">Activity Report</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-navy-900 mt-2">過去の活動実績</h2>
+    <section id="works" class="py-12 md:py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-6 md:px-8">
+            <div class="text-center mb-8 md:mb-12 fade-hidden">
+                <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">Activity Report</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-900 mt-2">過去の活動実績</h2>
             </div>
 
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-2 mb-12 fade-hidden">
-                <button class="tab-btn active px-6 py-2 rounded-full border border-slate-200 text-sm font-medium transition-all hover:bg-slate-100" data-filter="all">ALL</button>
-                <button class="tab-btn px-6 py-2 rounded-full border border-slate-200 text-sm font-medium transition-all hover:bg-slate-100" data-filter="event">イベント</button>
-                <button class="tab-btn px-6 py-2 rounded-full border border-slate-200 text-sm font-medium transition-all hover:bg-slate-100" data-filter="news">ニュース</button>
+            <div class="flex flex-wrap justify-center gap-2 mb-8 md:mb-12 fade-hidden">
+                <button class="tab-btn active px-4 md:px-6 py-2 rounded-full border border-slate-200 text-xs md:text-sm font-medium transition-all hover:bg-slate-100" data-filter="all">ALL</button>
+                <button class="tab-btn px-4 md:px-6 py-2 rounded-full border border-slate-200 text-xs md:text-sm font-medium transition-all hover:bg-slate-100" data-filter="event">イベント</button>
+                <button class="tab-btn px-4 md:px-6 py-2 rounded-full border border-slate-200 text-xs md:text-sm font-medium transition-all hover:bg-slate-100" data-filter="news">ニュース</button>
             </div>
 
             <!-- Works Grid -->
-            <div id="works-grid" class="grid md:grid-cols-3 gap-8 works-container fade-hidden">
+            <div id="works-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 works-container fade-hidden">
                 <!-- Works will be dynamically loaded here -->
             </div>
             
             <!-- Load More Button -->
-            <div class="text-center mt-12">
-                <button id="load-more-btn" class="hidden bg-navy-900 hover:bg-navy-800 text-white px-8 py-4 rounded-full font-bold text-center transition-all hover:shadow-lg flex items-center justify-center gap-2 mx-auto">
+            <div class="text-center mt-8 md:mt-12">
+                <button id="load-more-btn" class="hidden bg-navy-900 hover:bg-navy-800 text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm md:text-base text-center transition-all hover:shadow-lg flex items-center justify-center gap-2 mx-auto">
                     もっと見る
                     <i data-lucide="chevron-down" class="w-5 h-5"></i>
                 </button>
@@ -557,25 +601,37 @@
     </section>
 
     <!-- 6. CONTACT -->
-    <section id="contact" class="py-24 bg-navy-900 text-white">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16">
+    <section id="contact" class="py-12 md:py-16 lg:py-24 bg-navy-900 text-white">
+        <div class="container mx-auto px-6 md:px-8">
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
                 <div>
-                    <span class="text-accent-500 font-bold tracking-widest text-sm uppercase">Contact</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">お問い合わせ</h2>
-                    <p class="text-slate-300 mb-8 leading-relaxed">
+                    <span class="text-accent-500 font-bold tracking-widest text-xs md:text-sm uppercase">Contact</span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-4 md:mb-6">お問い合わせ</h2>
+                    <p class="text-sm md:text-base text-slate-300 mb-6 md:mb-8 leading-relaxed indent-4">
                         活動のご依頼、入会希望など、お気軽にお問い合わせください。<br>
-                        右記フォームより受け付けております。
+                        <span class="md:hidden">下記</span><span class="hidden md:inline">右記</span>フォームより受け付けております。
                     </p>
-                    <div class="space-y-4 text-sm text-slate-300">
+                    <div class="space-y-4 text-sm md:text-base text-slate-300">
                         <p class="flex items-center gap-3"><i data-lucide="mail" class="w-5 h-5 text-accent-500"></i> amis.hmmts.shzunv@gmail.com</p>
                         <p class="flex items-center gap-3"><i data-lucide="map-pin" class="w-5 h-5 text-accent-500"></i> 静岡県 浜松市 中央区 城北３丁目５−１ 静岡大学 浜松キャンパス内</p>
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-lg overflow-hidden h-[600px]">
-                    <!-- Google Forms Embed -->
-                    <iframe src="https://docs.google.com/forms/d/1ssjKPmcdcsxmbJMWE9GHC0WggzjpoZSn431dQxaE6eQ/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+                <!-- PC: iframe埋め込み -->
+                <div class="hidden md:block">
+                    <iframe src="https://docs.google.com/forms/d/1ssjKPmcdcsxmbJMWE9GHC0WggzjpoZSn431dQxaE6eQ/viewform" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0" class="rounded-lg">読み込んでいます…</iframe>
+                </div>
+                
+                <!-- モバイル: リンクボタン -->
+                <div class="md:hidden bg-navy-800 border border-navy-700 rounded-lg p-6 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold mb-4">お問い合わせフォーム</h3>
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                        以下のリンクからGoogleフォームへアクセスしてください。
+                    </p>
+                    <a href="https://docs.google.com/forms/d/1ssjKPmcdcsxmbJMWE9GHC0WggzjpoZSn431dQxaE6eQ/viewform" target="_blank" rel="noopener noreferrer" class="bg-accent-500 hover:bg-accent-600 text-white px-6 py-4 rounded-lg font-bold text-center transition-all hover:shadow-lg flex items-center justify-center gap-2">
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
+                        フォームを開く
+                    </a>
                 </div>
             </div>
         </div>
@@ -586,21 +642,21 @@
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20">
             <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
             
-            <div class="modal-content bg-white rounded-lg shadow-xl transform transition-all w-[85%] md:w-[75%] lg:w-[60%] relative z-10 max-h-[95vh] flex flex-col">
-                <button class="modal-close absolute top-4 right-4 text-slate-400 hover:text-navy-900 transition-colors z-20">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+            <div class="modal-content bg-white rounded-lg shadow-xl transform transition-all max-w-4xl w-full relative z-10 max-h-[95vh] flex flex-col">
+                <button class="modal-close absolute top-3 right-3 md:top-4 md:right-4 text-slate-400 hover:text-navy-900 transition-colors z-20">
+                    <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </button>
                 
-                <div class="p-6 md:p-8 overflow-y-auto flex-1">
-                    <div class="modal-badge inline-block bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded mb-4">CATEGORY</div>
-                    <h2 class="modal-title text-2xl md:text-3xl font-bold text-navy-900 mb-4">活動タイトル</h2>
-                    <p class="modal-date text-sm text-slate-400 mb-6">2023.09.15</p>
+                <div class="p-4 sm:p-6 md:p-8 overflow-y-auto flex-1">
+                    <div class="modal-badge inline-block bg-accent-500 text-white text-[10px] md:text-xs font-bold px-2 md:px-3 py-1 rounded mb-3 md:mb-4">CATEGORY</div>
+                    <h2 class="modal-title text-xl sm:text-2xl md:text-3xl font-bold text-navy-900 mb-3 md:mb-4">活動タイトル</h2>
+                    <p class="modal-date text-xs md:text-sm text-slate-400 mb-4 md:mb-6">2023.09.15</p>
                     
-                    <div class="modal-image mb-6 rounded-lg overflow-hidden aspect-video w-2/3 mx-auto">
+                    <div class="modal-image mb-4 md:mb-6 rounded-lg overflow-hidden aspect-video w-full sm:w-5/6 md:w-2/3 mx-auto">
                         <img src="" alt="活動画像" class="modal-image-element w-full h-full object-cover">
                     </div>
                     
-                    <div class="modal-body markdown-content text-slate-600 leading-relaxed">
+                    <div class="modal-body markdown-content text-sm md:text-base text-slate-600 leading-relaxed">
                         <p>ここに活動の詳細な説明が入ります。実際の活動内容や成果、参加者の様子などを記載します。</p>
                         <p>このモーダルはダミーのコンテンツです。各活動カードをクリックすることで表示されます。</p>
                         <h3 class="text-lg font-bold text-navy-900 mt-6 mb-2">活動の目的</h3>
@@ -614,8 +670,8 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-navy-900 text-slate-400 py-12 border-t border-navy-800">
-        <div class="container mx-auto px-6 text-center">
+    <footer class="bg-navy-900 text-slate-400 py-8 md:py-12 border-t border-navy-800">
+        <div class="container mx-auto px-6 md:px-8 text-center">
             <div class="flex items-center justify-center gap-2 mb-6">
                 <div class="w-8 h-8 bg-white text-navy-900 flex items-center justify-center rounded font-bold text-lg">A</div>
                 <span class="text-lg font-bold text-white tracking-tight">AMIS</span>
