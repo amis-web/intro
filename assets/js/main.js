@@ -7,7 +7,8 @@ let workContents = {};
 let newsData = [];
 let newsContents = {};
 let displayedCount = 0;
-const INITIAL_DISPLAY = 6;
+// レスポンシブ対応: モバイル時は3件、PC時は6件表示
+const INITIAL_DISPLAY = window.innerWidth < 768 ? 3 : 6;
 const LOAD_MORE_COUNT = 10;
 const NEWS_DISPLAY_COUNT = 3;
 let currentFilter = 'all';
@@ -366,16 +367,17 @@ function renderNewsItems() {
         const cardHTML = `
             <div class="news-item group cursor-pointer bg-white border border-slate-100 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300" data-modal="${news.id}">
                 <div class="flex flex-col md:flex-row h-auto md:h-56">
-                    <div class="md:w-1/4 h-48 md:h-full overflow-hidden flex-shrink-0">
+                    <!-- モバイル: 画像非表示、PC: 画像表示 -->
+                    <div class="hidden md:block md:w-1/4 md:h-full overflow-hidden flex-shrink-0">
                         <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover ${imagePositionClass} transition-transform duration-500 group-hover:scale-105">
                     </div>
-                    <div class="p-6 md:w-3/4 flex flex-col justify-center">
+                    <div class="p-4 md:p-6 md:w-3/4 flex flex-col justify-center">
                         <div class="flex items-center gap-3 mb-2">
                             <span class="text-xs text-slate-400 font-mono">${news.date}</span>
                             <span class="px-2 py-0.5 ${badgeColorClass} rounded text-[10px] font-bold">${news.category}</span>
                         </div>
-                        <h3 class="font-bold text-lg text-navy-900 mb-2 group-hover:text-accent-500 transition-colors line-clamp-2">${news.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">${news.description || ''}</p>
+                        <h3 class="font-bold text-base md:text-lg text-navy-900 mb-1 md:mb-2 group-hover:text-accent-500 transition-colors line-clamp-2">${news.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 hidden md:block">${news.description || ''}</p>
                     </div>
                 </div>
             </div>
