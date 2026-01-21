@@ -1,0 +1,35 @@
+[
+  {
+    "id": "news-001",
+    "date": "2023.10.15",
+    "category": "活動報告",
+    "categoryColor": "blue",
+    "title": "秋の献血キャンペーンを実施しました。目標を大きく上回るご協力をいただきました。",
+    "description": "駅前広場にて実施した献血呼びかけ活動にて、100名を超える方にご協力をいただきました。学生スタッフ20名で元気よく呼びかけを行いました。",
+    "image": "assets/images/sample.jpg",
+    "imagePosition": "center",
+    "contentFile": "assets/data/news/news-001.md"
+  },
+  {
+    "id": "news-002",
+    "date": "2023.10.01",
+    "category": "お知らせ",
+    "categoryColor": "orange",
+    "title": "新規ボランティアメンバー募集開始（秋期）",
+    "description": "私たちと一緒に活動する新しい仲間を募集しています。説明会の日程は10月15日（土）と10月22日（土）の2回を予定しています。",
+    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800",
+    "imagePosition": "center",
+    "contentFile": "assets/data/news/news-002.md"
+  },
+  {
+    "id": "news-003",
+    "date": "2023.09.20",
+    "category": "イベント",
+    "categoryColor": "green",
+    "title": "地域の「遊びの会」ハロウィンSPの開催決定！",
+    "description": "仮装して参加できる特別イベントを開催します。お菓子配布やパレードも予定しています。10月29日（土）開催、参加費無料です。",
+    "image": "https://images.unsplash.com/photo-1511632765486-a01980968a0c?auto=format&fit=crop&q=80&w=800",
+    "imagePosition": "center",
+    "contentFile": "assets/data/news/news-003.md"
+  }
+]
