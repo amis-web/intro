@@ -240,19 +240,24 @@ function initializeLoadMore() {
 }
 
 // 6. Modal Logic
+let modalInitialized = false;
+
 function initializeModal() {
     const modal = document.getElementById('workModal');
     const modalClose = document.querySelector('.modal-close');
     const modalOverlay = document.querySelector('.modal-overlay');
 
-    // Open modal
-    const workItems = document.querySelectorAll('.work-item');
-    workItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const modalId = item.getAttribute('data-modal');
-            openWorkModalById(modalId, true);
+    // Open modal (use event delegation to avoid duplicate listeners)
+    const worksGrid = document.getElementById('works-grid');
+    if (worksGrid && !modalInitialized) {
+        worksGrid.addEventListener('click', (e) => {
+            const workItem = e.target.closest('.work-item');
+            if (workItem) {
+                const modalId = workItem.getAttribute('data-modal');
+                openWorkModalById(modalId, true);
+            }
         });
-    });
+    }
 
     // Close modal
     const closeModal = () => {
@@ -268,15 +273,20 @@ function initializeModal() {
         }
     };
 
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
+    // モーダルのクローズイベントは一度だけ登録
+    if (!modalInitialized) {
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
 
-    // Close modal with ESC key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            closeModal();
-        }
-    });
+        // Close modal with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+        
+        modalInitialized = true;
+    }
 }
 
 // Open work modal by ID (with optional URL update)
@@ -318,6 +328,12 @@ function openWorkModalById(modalId, updateUrl = false) {
         modal.classList.remove('hidden');
         modal.classList.add('show');
         document.body.classList.add('modal-open');
+        
+        // スクロール位置を常にトップにリセット
+        const modalScrollContainer = modal.querySelector('.overflow-y-auto');
+        if (modalScrollContainer) {
+            modalScrollContainer.scrollTop = 0;
+        }
         
         // Update URL using hash
         if (updateUrl) {
@@ -432,15 +448,21 @@ function renderNewsItems() {
 }
 
 // 8. News Modal Logic (updated to use markdown content)
+let newsModalInitialized = false;
+
 function initializeNewsModal() {
-    const newsItems = document.querySelectorAll('.news-item');
-    
-    newsItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const modalId = item.getAttribute('data-modal');
-            openNewsModalById(modalId, true);
+    // Use event delegation to avoid duplicate listeners
+    const newsGrid = document.getElementById('news-grid');
+    if (newsGrid && !newsModalInitialized) {
+        newsGrid.addEventListener('click', (e) => {
+            const newsItem = e.target.closest('.news-item');
+            if (newsItem) {
+                const modalId = newsItem.getAttribute('data-modal');
+                openNewsModalById(modalId, true);
+            }
         });
-    });
+        newsModalInitialized = true;
+    }
 }
 
 function openNewsModalById(newsId, updateUrl = false) {
@@ -463,7 +485,7 @@ function openNewsModal(news, mdContent, updateUrl = false) {
                 <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20">
                     <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
                     
-                    <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full relative z-10 max-h-[95vh] flex flex-col">
+                    <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full relative z-10 max-h-[90dvh] flex flex-col">
                         <button class="news-modal-close absolute top-4 right-4 z-50 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110">
                             <i data-lucide="x" class="w-6 h-6 text-navy-900"></i>
                         </button>
@@ -585,6 +607,12 @@ function openNewsModal(news, mdContent, updateUrl = false) {
     setTimeout(() => {
         newsModal.classList.add('show');
         document.body.classList.add('modal-open');
+        
+        // スクロール位置を常にトップにリセット
+        const modalScrollContainer = newsModal.querySelector('.overflow-y-auto');
+        if (modalScrollContainer) {
+            modalScrollContainer.scrollTop = 0;
+        }
     }, 10);
     
     // Update URL using hash
