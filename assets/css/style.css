@@ -25,6 +25,17 @@ html {
     border-color: #0f172a;
 }
 
+/* タブボタンの:active疑似クラスのスタイルを無効化（クリック時の一時的なスタイル変更を防止） */
+.tab-btn:active {
+    background-color: inherit;
+    color: inherit;
+}
+
+.tab-btn.active:active {
+    background-color: #0f172a;
+    color: white;
+}
+
 /* SDGs Icon Style */
 .sdgs-icon {
     display: inline-flex;
