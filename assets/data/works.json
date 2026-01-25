@@ -53,5 +53,27 @@
     "image": "assets/images/2025-12-13-0.png",
     "imagePosition": "top",
     "contentFile": "assets/data/works/2025-12-13-0.md"
-}
+},
+{
+    "id": "202512060",
+    "category": "event",
+    "badge": "EVENT",
+    "badgeColor": "green-600",
+    "title": "フードパントリーにボランティア参加しました",
+    "date": "2025/12/6",
+    "image": "https://placehold.co/800x600/334155/ffffff/png?text=Activity+Report",
+    "imagePosition": "center",
+    "contentFile": "assets/data/works/2025-12-06-0.md"
+},
+{
+    "id": "202511300",
+    "category": "event",
+    "badge": "EVENT",
+    "badgeColor": "green-600",
+    "title": "子どもの権利フォーラムに参加しました",
+    "date": "2025/11/30",
+    "image": "https://placehold.co/800x600/334155/ffffff/png?text=Activity+Report",
+    "imagePosition": "center",
+    "contentFile": "assets/data/works/2025-11-30-0.md"
+},
 ]
